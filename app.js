@@ -3,6 +3,8 @@ const path = require('path');
 const indexRouter = require('./routes/index');
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 const PORT = 3000;
 
 // Serve static files from the "public" directory
