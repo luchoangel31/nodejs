@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const authMiddleware = require('../middleware/auth');
+
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
 
@@ -10,7 +12,6 @@ router.post('/login', (req, res) => {
     });
   }
 
-  // MOCK (luego va BD)
   if (email === 'test@test.com' && password === '123456') {
     return res.json({
       message: 'Login correcto',
@@ -20,6 +21,13 @@ router.post('/login', (req, res) => {
 
   res.status(401).json({
     error: 'Credenciales incorrectas'
+  });
+});
+
+router.get('/profile', authMiddleware, (req, res) => {
+  res.json({
+    message: 'Ruta protegida OK',
+    user: req.user
   });
 });
 
